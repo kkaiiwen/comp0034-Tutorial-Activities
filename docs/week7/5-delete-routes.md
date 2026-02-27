@@ -20,7 +20,7 @@ The following code returns None if the Games is not found, and an empty dict if 
 deleted. You could choose to just return the empty dict for either case.
 
 ```python
-def delete_games(self, session: SessionDep, games_id: int) -> Any:
+def delete_games(self, session: SessionDep, games_id: int) -> None:
     """ Delete a paralympic Games
 
     Args:
@@ -44,20 +44,20 @@ deleted. You can choose to always return 204 if you prefer.
 
 ```python
 @router.delete("/games/{games_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_games(session: SessionDep, games_id: int) -> Any:
+def delete_games(session: SessionDep, games_id: int) -> None:
     """ Delete a new paralympic Games
 
     The version returns 404 if the Games was not found and 204 if it was deleted
     You could modify and return 204 in both cases
 
     Returns:
-        {}: empty dict
+        Nothing as the 204 Method expects an empty body
     """
     games = crud.delete_games(session, games_id)
     if games is None:
         raise HTTPException(status_code=404, detail=f"Games with id {games_id} not found")
     else:
-        return {}
+        return
 ```
 
 Add the code. Make sure the app is running. Use the interactive docs to delete the new games you
